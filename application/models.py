@@ -19,3 +19,11 @@ class ApplicationArchive(models.Model):
     med_worker = models.ForeignKey(MedWorker, on_delete=models.DO_NOTHING)
     service = models.ForeignKey(Service, on_delete=models.DO_NOTHING)
     status = models.ForeignKey(ApplicationStatus, on_delete=models.DO_NOTHING)
+
+    opening_date = models.DateTimeField(auto_now_add=True, auto_now=False,
+                                        blank=True, null=True,
+                                        verbose_name='Дата открытия заявки')
+
+    closing_date = models.DateTimeField(auto_now_add=False, auto_now=True,
+                                        blank=True, null=True,
+                                        verbose_name='Дата закрытия заявки')
