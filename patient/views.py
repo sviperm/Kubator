@@ -3,6 +3,7 @@ from django.shortcuts import render
 
 # Create your views here.
 def get_service_list(request):
+
     return render(request, 'patient/service_list.html')
 
 
