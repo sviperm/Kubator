@@ -7,11 +7,13 @@ class Position(models.Model):
 
 
 class ManagerProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User,
+                                on_delete=models.CASCADE)
 
 
 class MedWorkerProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User,
+                                on_delete=models.CASCADE)
     mid_name = models.CharField(max_length=100, verbose_name="Фамилия")
     position = models.ForeignKey(
         'Position',
@@ -21,8 +23,7 @@ class MedWorkerProfile(models.Model):
 
 class PatientProfile(models.Model):
     user = models.OneToOneField(User,
-                                on_delete=models.CASCADE,
-                                primary_key=True)
+                                on_delete=models.CASCADE)
     mid_name = models.CharField(max_length=100, verbose_name="Отчество")
     birth_date = models.DateField(null=False, verbose_name="Дата рождения")
     address = models.TextField(verbose_name="Адрес")
