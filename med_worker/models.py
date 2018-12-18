@@ -3,5 +3,5 @@ from django.db import models
 # Create your models here.
 
 
-class MedWorker(models.Model):
+class MedWorkerProfile(models.Model):
     pass
