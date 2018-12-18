@@ -20,6 +20,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path('login/', include('sign_in'), name='login'),
     # path('manager/', include('manager.urls'), name='manager'),
-    path('patient/', include('patient.urls'), name='patient'),
+    # path('patient/', include('patient.urls'), name='patient'),
+    path('service/', include('service.urls')),
     # path('worker/', include('med_worker.urls'), name='worker'),
 ]
