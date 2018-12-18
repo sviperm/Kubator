@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'rolepermissions',
     'login',
     'manager',
-    # 'med_worker',
-    # 'patient',
+    'med_worker',
+    'patient',
 ]
 
 MIDDLEWARE = [
