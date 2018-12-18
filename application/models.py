@@ -1,7 +1,7 @@
 from django.db import models
 
-from patient.models import Patient
-from med_worker.models import MedWorker
+from patient.models import PatientProfile
+from med_worker.models import MedWorkerProfile
 from service.models import Service
 # Create your models here.
 
@@ -15,8 +15,8 @@ class ApplicationStatus(models.Model):
 
 
 class ApplicationArchive(models.Model):
-    patient = models.ForeignKey(Patient, on_delete=models.DO_NOTHING)
-    med_worker = models.ForeignKey(MedWorker, on_delete=models.DO_NOTHING)
+    patient = models.ForeignKey(PatientProfile, on_delete=models.DO_NOTHING)
+    med_worker = models.ForeignKey(MedWorkerProfile, on_delete=models.DO_NOTHING)
     service = models.ForeignKey(Service, on_delete=models.DO_NOTHING)
     status = models.ForeignKey(ApplicationStatus, on_delete=models.DO_NOTHING)
 
