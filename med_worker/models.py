@@ -11,7 +11,6 @@ class Position(models.Model):
 
 
 class MedWorkerProfile(models.Model):
-    user = models.OneToOneField(User,
-                                on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     middle_name = models.CharField(max_length=100, verbose_name="Отчество", blank=True, null=True)
     position = models.ForeignKey('Position', on_delete=models.CASCADE, verbose_name='Должность')
