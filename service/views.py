@@ -1,11 +1,9 @@
 from django.shortcuts import render, redirect
+from order.handler import OrderDistributor
+
 from .models import Service
 from . import forms
 from . import logic
-
-
-# def simulator():
-#     pass
 
 
 def build_service_list(request, template, context):
@@ -19,12 +17,13 @@ def build_service(request, service_name, success_redirect='service_list'):
     user = logic.is_patient(request.user)
 
     if user:
-        # user_id = user.id
+        user_id = user.id
         service_id = Service.objects.get(name__iexact=service_name).id
-        print(service_id)
+
+        dsys = OrderDistributor()  # init order distribution system
+        dsys.add_order(user_id, service_id)
 
         return redirect(success_redirect)
-
     return redirect(logic.get_redirect_url(user))
 
 
