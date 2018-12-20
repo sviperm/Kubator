@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 'rolepermissions',
     'service',                      # Приложение описывающие услуги, их тип и имя
-    'application',                  # Приложение для обработки заявок от пациентов, содержит архив оказанных услуг
+    'order',                  # Приложение для обработки заявок от пациентов, содержит архив оказанных услуг
     # 'sign_in'
     'med_worker',
     'patient',
