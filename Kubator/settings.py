@@ -37,10 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'rolepermissions',
     'service',                      # Приложение описывающие услуги, их тип и имя
-    'order',                  # Приложение для обработки заявок от пациентов, содержит архив оказанных услуг
-    # 'sign_in'
+    'order',                        # Приложение для обработки заявок от пациентов, содержит архив оказанных услуг
+    'login',
+    'manager',
     'med_worker',
     'patient',
 ]
@@ -61,6 +61,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
             os.path.join(BASE_DIR, 'patient', 'templates'),
         ],
         'APP_DIRS': True,
