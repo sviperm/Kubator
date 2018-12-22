@@ -120,6 +120,8 @@ class OrderDistributor(metaclass=Singleton):
         :param report: отчет о проделанной работе
         """
         order = self.workers[worker_id]
+        self.workers[worker_id] = None
+
         order.status = self.status_done
         order.closing_date = now()
         order.report = report
@@ -127,6 +129,4 @@ class OrderDistributor(metaclass=Singleton):
 
         if len(self.to_do) > 0:
             order = self.to_do.pop(0)
-            self.self.workers[worker_id] = order
-        else:
-            self.workers[worker_id] = None
+            self.pass_order_to_worker(worker_id, order)
