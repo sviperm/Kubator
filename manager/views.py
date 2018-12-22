@@ -5,7 +5,8 @@ from .forms import SignUpPatientForm, SignUpMedWorkerForm
 from . import helpers
 
 
-# def index(request):
+def index(request):
+    pass
     
 
 
