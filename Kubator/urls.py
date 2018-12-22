@@ -19,9 +19,9 @@ from django.views.generic.base import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('manager/', include('manager.urls')),
     path('account/', include('account.urls')),
-    # path('login/', include('login.urls')),
-    # path('', include('patient.urls')),
-    # path('', include('med_worker.urls')),
+    path('manager/', include('manager.urls')),
+    path('service/', include('service.urls'), name='service'),
+    # path('patient/', include('patient.urls'), name='patient'),
+    # path('worker/', include('med_worker.urls'), name='worker'),
 ]

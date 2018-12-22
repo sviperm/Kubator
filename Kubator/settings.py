@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rolepermissions',
     'account',
+    'service',                      # Приложение описывающие услуги, их тип и имя
+    'order',                        # Приложение для обработки заявок от пациентов, содержит архив оказанных услуг
     'manager',
     'med_worker',
     'patient',
@@ -59,7 +60,11 @@ ROOT_URLCONF = 'Kubator.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [
+            # os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'login', 'templates'),
+            os.path.join(BASE_DIR, 'patient', 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

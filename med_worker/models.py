@@ -12,7 +12,7 @@ class Position(models.Model):
 class MedWorkerProfile(models.Model):
     user = models.OneToOneField(User,
                                 on_delete=models.CASCADE)
-    mid_name = models.CharField(max_length=100, verbose_name="Отчество")
+    middle_name = models.CharField(max_length=100, verbose_name="Отчество")
     position = models.ForeignKey(
         'Position',
         on_delete=models.CASCADE,
@@ -20,4 +20,4 @@ class MedWorkerProfile(models.Model):
     )
 
     def __str__(self):
-        return f'{self.user.last_name} {self.user.first_name} {self.mid_name}: {self.position}'
+        return f'{self.user.last_name} {self.user.first_name} {self.middle_name}: {self.position}'

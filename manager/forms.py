@@ -29,7 +29,7 @@ class SignUpPatientForm(forms.ModelForm):
 
     class Meta:
         model = PatientProfile
-        fields = ['username', 'password', 'last_name', 'first_name', 'mid_name',
+        fields = ['username', 'password', 'last_name', 'first_name', 'middle_name',
                   'birth_date', 'address', 'contact_phone']
 
 
@@ -41,5 +41,5 @@ class SignUpMedWorkerForm(forms.ModelForm):
 
     class Meta:
         model = MedWorkerProfile
-        fields = ['username', 'password', 'last_name', 'first_name', 'mid_name',
+        fields = ['username', 'password', 'last_name', 'first_name', 'middle_name',
                   'position']
