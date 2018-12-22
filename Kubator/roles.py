@@ -17,4 +17,3 @@ class Manager(AbstractUserRole):
     available_permissions = {
 
     }
-
