@@ -72,6 +72,17 @@ class OrderDistributor(metaclass=Singleton):
             return False
         return True
 
+    def find_free_worker(self):
+        for worker in self.workers.keys():
+            if self.is_worker_free(worker):
+                return worker
+
+        return None
+
+    def pass_order_to_worker(self, worker_id, order_obj):
+        if self.is_worker_free(worker_id):
+            self.workers[worker_id] = order_obj
+
     def add_order(self, user_id, service_id):
         """
         Добовляет заявку в лист заявок
@@ -84,16 +95,18 @@ class OrderDistributor(metaclass=Singleton):
         order.status = self.status_waiting
         order.save()
 
-        self.to_do.append(order)
+        worker = self.find_free_worker()
+        if worker:
+            self.pass_order_to_worker(worker, order)
+        else:
+            self.to_do.append(order)
 
-    def open(self, worker_id, to_do_number):
+    def open(self, worker_id):
         """
-        Открывает заявку на обслуживание, меняет статус на соотвествующий,
-        закрепляет за ней работника.
+        Открывает заявку на обслуживание, меняя статус на соотвествующий
         :param worker_id: id пользователя, имеющего роль работника
-        :param to_do_number: номер заявки
         """
-        order = self.to_do.pop(to_do_number)
+        order = self.workers[worker_id]
         order.status = self.status_in_process
         order.opening_date = now()
         order.save()
@@ -112,4 +125,8 @@ class OrderDistributor(metaclass=Singleton):
         order.report = report
         order.save()
 
-        self.workers[worker_id] = None
+        if len(self.to_do) > 0:
+            order = self.to_do.pop(0)
+            self.self.workers[worker_id] = order
+        else:
+            self.workers[worker_id] = None
