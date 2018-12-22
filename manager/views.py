@@ -1,13 +1,12 @@
-from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User, Group
 from .forms import SignUpPatientForm, SignUpMedWorkerForm
-from django.contrib.auth.models import Group
 from . import helpers
 
 
-def index(request):
-    return HttpResponse('hello')
+# def index(request):
+    
 
 
 def signup(request, profile):
