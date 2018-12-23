@@ -18,8 +18,8 @@ from django.urls import path, include
 from django.views.generic.base import TemplateView
 
 urlpatterns = [
+    path('', include('account.urls')),
     path('admin/', admin.site.urls),
-    path('account/', include('account.urls')),
     path('manager/', include('manager.urls')),
     path('service/', include('service.urls'), name='service'),
     # path('patient/', include('patient.urls'), name='patient'),

@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'account',
     'service',                      # Приложение описывающие услуги, их тип и имя
-    'order',                        # Приложение для обработки заявок от пациентов, содержит архив оказанных услуг
+    # Приложение для обработки заявок от пациентов, содержит архив оказанных услуг
+    'order',
     'manager',
     'med_worker',
     'patient',
@@ -61,9 +62,9 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            # os.path.join(BASE_DIR, 'templates'),
-            os.path.join(BASE_DIR, 'login', 'templates'),
-            os.path.join(BASE_DIR, 'patient', 'templates'),
+            os.path.join(BASE_DIR, 'templates'),
+            # os.path.join(BASE_DIR, 'login', 'templates'),
+            # os.path.join(BASE_DIR, 'patient', 'templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -109,6 +110,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# The URL where requests are redirected for login
+LOGIN_URL = '/account/login/'
+# The URL where requests are redirected after login
+# when the contrib.auth.login view gets no next parameter.
+LOGIN_REDIRECT_URL = '/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -131,4 +137,4 @@ STATIC_URL = '/static/'
 
 
 # For django-role-permissions package
-ROLEPERMISSIONS_MODULE = 'Kubator.roles'
+# ROLEPERMISSIONS_MODULE = 'Kubator.roles'
