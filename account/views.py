@@ -1,5 +1,10 @@
 # from django.shortcuts import render
 # from django.contrib.auth import authenticate, login
+from django.http import HttpResponse
+
+
+def home(request):
+    return HttpResponse('Home page')
 
 # def login(request):
 #     if request.method == 'POST':
