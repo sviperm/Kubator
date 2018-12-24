@@ -108,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LOGIN_URL = '/account/login/'
 # The URL where requests are redirected after login
 # when the contrib.auth.login view gets no next parameter.
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'account:home'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
