@@ -1,10 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-<<<<<<< Updated upstream
-from service.models import PatientProfile, MedWorkerProfile
-=======
 from service.models import PatientProfile, MedWorkerProfile, Order
->>>>>>> Stashed changes
 
 
 class SignUpPatientForm(forms.ModelForm):
