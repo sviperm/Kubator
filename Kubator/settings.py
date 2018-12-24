@@ -38,12 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'account',
-    'service',                      # Приложение описывающие услуги, их тип и имя
-    # Приложение для обработки заявок от пациентов, содержит архив оказанных услуг
-    # 'order',
+    'service',
     'manager',
-    # 'med_worker',
-    # 'patient',
 ]
 
 MIDDLEWARE = [
@@ -132,7 +128,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
-
-# For django-role-permissions package
-# ROLEPERMISSIONS_MODULE = 'Kubator.roles'
