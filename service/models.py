@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class Position(models.Model):
-    title = models.CharField(max_length=100, verbose_name="Должность")
+    title = models.CharField(max_length=100, unique=True, verbose_name="Должность")
 
     def __str__(self):
         return self.title
