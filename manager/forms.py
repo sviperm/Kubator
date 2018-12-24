@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from patient.models import PatientProfile
-from med_worker.models import MedWorkerProfile
+from service.models import PatientProfile, MedWorkerProfile
 
 
 class SignUpPatientForm(forms.ModelForm):
