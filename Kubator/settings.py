@@ -40,10 +40,10 @@ INSTALLED_APPS = [
     'account',
     'service',                      # Приложение описывающие услуги, их тип и имя
     # Приложение для обработки заявок от пациентов, содержит архив оказанных услуг
-    'order',
+    # 'order',
     'manager',
-    'med_worker',
-    'patient',
+    # 'med_worker',
+    # 'patient',
 ]
 
 MIDDLEWARE = [
@@ -63,8 +63,6 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'templates'),
-            # os.path.join(BASE_DIR, 'login', 'templates'),
-            # os.path.join(BASE_DIR, 'patient', 'templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
