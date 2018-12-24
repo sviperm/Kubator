@@ -1,5 +1,4 @@
-from patient.models import PatientProfile
-from med_worker.models import MedWorkerProfile
+from service.models import MedWorkerProfile, PatientProfile
 
 
 def gen_username(profile):

@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from . import url_names_config as names
 
+app_name = 'service'
 urlpatterns = [
     path('', views.get_service_list, name=names.SERVICE_LIST),
     path('alert/', views.alert, name=names.ALERT),

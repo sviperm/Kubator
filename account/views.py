@@ -1,10 +1,19 @@
-# from django.shortcuts import render
+from django.shortcuts import render, redirect
 # from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 
+@login_required(redirect_field_name='')
 def home(request):
-    return HttpResponse('Home page')
+    user = request.user
+    if user.groups.filter(name='manager').exists():
+        return redirect('manager:home')
+    elif user.groups.filter(name='patient').exists():
+        return redirect('service: ')
+    elif user.groups.filter(name='medworker').exists():
+        return redirect('service: ')
+    return HttpResponse("User don't have any role")
 
 # def login(request):
 #     if request.method == 'POST':

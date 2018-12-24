@@ -9,7 +9,7 @@ from .helpers import gen_username, is_manager
 @login_required(redirect_field_name='')
 @user_passes_test(is_manager, redirect_field_name='')
 def index(request):
-    return HttpResponse('Manager main page')
+    return HttpResponse('Manager page')
 
 
 @login_required(redirect_field_name='')
