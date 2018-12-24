@@ -1,6 +1,5 @@
 from django import forms
-from django.contrib.auth.models import User
-from service.models import PatientProfile, MedWorkerProfile, Order
+from service.models import PatientProfile, MedWorkerProfile
 
 
 class SignUpPatientForm(forms.ModelForm):
@@ -14,16 +13,6 @@ class SignUpPatientForm(forms.ModelForm):
         model = PatientProfile
         fields = ['last_name', 'first_name', 'middle_name',
                   'birth_date', 'address', 'contact_phone']
-
-
-class SignUpMedWorkerForm(forms.ModelForm):
-    last_name = forms.CharField(label='Фамилия', max_length=100)
-    first_name = forms.CharField(label='Имя', max_length=100)
-
-    class Meta:
-        model = MedWorkerProfile
-        fields = ['last_name', 'first_name', 'middle_name',
-                  'position']
 
 
 class SignUpMedWorkerForm(forms.ModelForm):
