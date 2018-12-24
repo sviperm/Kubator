@@ -62,3 +62,10 @@ target/
 # Sqlite database
 *.sqlite
 *.sqlite3
+
+# Keep only migrations folder
+# **/migrations/
+# !**/migrations/__init__.py
+
+# VSCode
+.vscode
