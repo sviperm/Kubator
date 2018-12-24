@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import ManagerProfile
-from med_worker.models import MedWorkerProfile, Position
-from patient.models import PatientProfile
+from service.models import PatientProfile, MedWorkerProfile, Position
 
 admin.site.register(Position)
 admin.site.register(ManagerProfile)
