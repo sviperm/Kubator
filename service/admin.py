@@ -1,12 +1,5 @@
 from django.contrib import admin
-from . models import Service  # ,TypeService
-
-# Register your models here.
-
-
-# @admin.register(TypeService)
-# class TypeServiceAdmin(admin.ModelAdmin):
-#     pass
+from . models import Service
 
 
 @admin.register(Service)
