@@ -49,12 +49,12 @@ class OrderStatus(models.Model):
 
 
 class Order(models.Model):
-    patient = models.ForeignKey(PatientProfile, on_delete=models.DO_NOTHING)
-    worker = models.ForeignKey(MedWorkerProfile, on_delete=models.DO_NOTHING,
+    patient = models.ForeignKey(PatientProfile, on_delete=models.CASCADE)
+    worker = models.ForeignKey(MedWorkerProfile, on_delete=models.CASCADE,
                                blank=True, null=True)
 
-    service = models.ForeignKey(Service, on_delete=models.DO_NOTHING)
-    status = models.ForeignKey(OrderStatus, on_delete=models.DO_NOTHING)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    status = models.ForeignKey(OrderStatus, on_delete=models.CASCADE)
     report = models.TextField(blank=True, null=True)
 
     creation_date = models.DateTimeField(auto_now_add=True, auto_now=False,
