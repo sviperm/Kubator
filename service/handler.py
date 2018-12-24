@@ -1,7 +1,5 @@
 from django.utils.timezone import now
-
-from .models import OrderStatus, Order
-from med_worker.models import MedWorkerProfile
+from . import models
 
 
 class Singleton(type):
@@ -21,9 +19,9 @@ class OrderDistributor(metaclass=Singleton):
         self.workers = self.load_workers()
         self.to_do = self.load_orders()
 
-        self.status_waiting = OrderStatus.objects.get(name="Ожидает исполнителя")
-        self.status_in_process = OrderStatus.objects.get(name="В процессе")
-        self.status_done = OrderStatus.objects.get(name="Выполнено")
+        self.status_waiting = models.OrderStatus.objects.get(name="Ожидает исполнителя")
+        self.status_in_process = models.OrderStatus.objects.get(name="В процессе")
+        self.status_done = models.OrderStatus.objects.get(name="Выполнено")
 
     @staticmethod
     def load_workers():
@@ -32,7 +30,7 @@ class OrderDistributor(metaclass=Singleton):
         :return: словарь в котором ключ - id работника,
         значение - объект класса Order (по умолчанию None)
         """
-        user_id = MedWorkerProfile.objects.values_list('user_id', flat=True)
+        user_id = models.MedWorkerProfile.objects.values_list('user_id', flat=True)
         orders = [None] * len(user_id)
         return dict(zip(user_id, orders))
 
@@ -43,8 +41,8 @@ class OrderDistributor(metaclass=Singleton):
         аварийно прерванной работы приложения
         :return: лист с объектами класса Order
         """
-        not_done = list(OrderStatus.objects.all().filter(done=False))
-        to_do = Order.objects.all().filter(status__in=not_done)
+        not_done = list(models.OrderStatus.objects.all().filter(done=False))
+        to_do = models.Order.objects.all().filter(status__in=not_done)
         return list(to_do)
 
     def get_order_list(self):
@@ -58,7 +56,7 @@ class OrderDistributor(metaclass=Singleton):
         Добавляет в workers новый worker_id
         :param worker_id: id пользователя приложения, имеющего роль работника
         """
-        if MedWorkerProfile.objects.filter(user_id=worker_id).exists():
+        if models.MedWorkerProfile.objects.filter(user_id=worker_id).exists():
             self.workers.update({worker_id: None})
 
     def is_worker_free(self, worker_id):
@@ -89,9 +87,9 @@ class OrderDistributor(metaclass=Singleton):
         :param user_id: id потребителя услуг (пациента)
         :param service_id: id оказываемой потребителю услуги
         """
-        order = Order()
+        order = models.Order()
         order.user = user_id
-        order.service = service_id
+        order.service = models.Service.objects.get(id=service_id)
         order.status = self.status_waiting
         order.save()
 
@@ -116,6 +114,7 @@ class OrderDistributor(metaclass=Singleton):
     def close(self, worker_id, report):
         """
         Закрывает заявку, меняет статус на соотвествующий, открепляет работника.
+        Если есть невыполненные заявки, прекрепляет верхнюю к рабонику.
         :param worker_id: id пользователя, имеющего роль работника
         :param report: отчет о проделанной работе
         """

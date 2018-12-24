@@ -37,12 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'service',                      # Приложение описывающие услуги, их тип и имя
-    'order',                        # Приложение для обработки заявок от пациентов, содержит архив оказанных услуг
-    'login',
+    'service',
     'manager',
-    'med_worker',
-    'patient',
 ]
 
 MIDDLEWARE = [
@@ -61,9 +57,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            # os.path.join(BASE_DIR, 'templates'),
-            os.path.join(BASE_DIR, 'login', 'templates'),
-            os.path.join(BASE_DIR, 'patient', 'templates'),
+            os.path.join(BASE_DIR, 'templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -128,7 +122,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
-
-# For django-role-permissions package
-ROLEPERMISSIONS_MODULE = 'Kubator.roles'

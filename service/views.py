@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from order.handler import OrderDistributor
 
+from .handler import OrderDistributor
 from .models import Service
 from . import forms
 from . import logic
