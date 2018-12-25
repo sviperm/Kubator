@@ -46,5 +46,8 @@ def signup(request, profile):
         elif profile == 'medworker':
             form = SignUpMedWorkerForm()
         else:
+            # TODO: create an HTML template named 404.html
+            # and place it in the top level of template tree.
+            # TODO: set DEBUG to False.
             raise Http404()
     return render(request, 'manager/sign_up.html', {'form': form})
