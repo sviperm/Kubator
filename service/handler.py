@@ -83,12 +83,13 @@ class OrderDistributor(metaclass=Singleton):
 
     def add_order(self, user_id, service_id):
         """
-        Добовляет заявку в лист заявок
+        Добавляет заявку в лист невыполненных заявок, если есть свободный работник
+        прикрепляет заявку к нему
         :param user_id: id потребителя услуг (пациента)
         :param service_id: id оказываемой потребителю услуги
         """
         order = models.Order()
-        order.user = user_id
+        order.patient = models.PatientProfile.objects.get(user_id=user_id)
         order.service = models.Service.objects.get(id=service_id)
         order.status = self.status_waiting
         order.save()
@@ -106,6 +107,7 @@ class OrderDistributor(metaclass=Singleton):
         """
         order = self.workers[worker_id]
         order.status = self.status_in_process
+        order.worker = models.MedWorkerProfile.objects.get(user_id=worker_id)
         order.opening_date = now()
         order.save()
 

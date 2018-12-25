@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
 from .handler import OrderDistributor
 from .models import Service, Order, OrderStatus, PatientProfile
@@ -6,6 +7,7 @@ from . import forms
 from . import logic
 
 
+@login_required(redirect_field_name='')
 def build_service_list(request, template, context):
     user = logic.is_patient(request.user)
     if user:
@@ -13,6 +15,7 @@ def build_service_list(request, template, context):
     return redirect(logic.get_redirect_url(user))
 
 
+@login_required(redirect_field_name='')
 def build_service(request, service_name, success_redirect='service_list'):
     user = logic.is_patient(request.user)
 

@@ -1,14 +1,19 @@
-from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse
-from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User, Group
 from .forms import SignUpPatientForm, SignUpMedWorkerForm
-from django.contrib.auth.models import Group
+from .helpers import gen_username, is_manager
 
 
+@login_required(redirect_field_name='')
+@user_passes_test(is_manager, redirect_field_name='')
 def index(request):
-    return HttpResponse('hello')
+    return HttpResponse('Manager page')
 
 
+@login_required(redirect_field_name='')
+@user_passes_test(is_manager, redirect_field_name='')
 def signup(request, profile):
     # TODO: errors
     if request.method == 'POST':
@@ -19,8 +24,10 @@ def signup(request, profile):
         # TODO: else:
         if form.is_valid():
             user = User()
-            user.username = form.cleaned_data['username']
-            user.password = form.cleaned_data['password']
+            username = gen_username(profile)
+            user.username = username
+            password = User.objects.make_random_password(length=8)
+            user.set_password(password)
             user.last_name = form.cleaned_data['last_name']
             user.first_name = form.cleaned_data['first_name']
             user.save()
@@ -28,8 +35,11 @@ def signup(request, profile):
             group.user_set.add(user)
             profile = form.save(commit=False)
             profile.user = user
+            profile.raw_password = password
             profile.save()
-            return HttpResponse(profile)
+            # Get last created object
+            # https://docs.djangoproject.com/en/2.1/ref/models/querysets/#latest
+            return HttpResponse(f'Login: {username} Password: {password}')
     else:
         if profile == 'patient':
             form = SignUpPatientForm()
