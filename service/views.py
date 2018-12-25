@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
 from .handler import OrderDistributor
-from .models import Service
+from .models import Service, Order, OrderStatus, PatientProfile
 from . import forms
 from . import logic
 
@@ -94,5 +94,24 @@ def fun(request):
 
 
 ###############################################################################
+def get_order_list(request):
+    profile = PatientProfile.objects.get(user_id=request.user.id)
+    statuses = OrderStatus.objects.all().filter(done=False)
+
+    orders = Order.objects.filter(patient=profile, status__in=statuses)
+
+    context = {
+        'form': forms.ContextArchive[0],
+        'orders': orders,
+    }
+
+    return render(request, 'service/order_list', context=context)
+
+
 def get_archive(request):
-    return redirect('service_list')
+    profile = PatientProfile.objects.get(user_id=request.user.id)
+    statuses = OrderStatus.objects.all().filter(done=True)
+
+    orders = Order.objects.filter(patient=profile, status__in=statuses)
+
+    return render(request, 'service/archive', context={"orders": orders})
