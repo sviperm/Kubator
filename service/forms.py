@@ -49,3 +49,6 @@ ContextEscortList = gen_context_view(
     ]
 )
 
+ContextArchive = gen_context_view([
+    gen_context_form(names.ARCHIVE, 'Архив заявок')
+])
