@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-# from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
@@ -17,17 +17,21 @@ def home(request):
         return redirect('/admin/')
     return HttpResponse("User don't have any role")
 
-# def login(request):
+
+@login_required(redirect_field_name='')
+def logout_view(request):
+    logout(request)
+    return redirect('account:login')
+
+
+# def login_view(request):
 #     if request.method == 'POST':
 #         username = request.POST['username']
 #         password = request.POST['password']
 #         user = authenticate(request, username=username, password=password)
 #         if user is not None:
 #             login(request, user)
-#             # Redirect to a success page.
-#             ...
+#             return redirect('account:home')
 #         else:
-#             # Return an 'invalid login' error message.
-#             ...
-#     else:
-#         return render(request, 'login: login', {'form': form})
+#             return render(request, 'registrations/login.html', {'error': True})
+#     return render(request, 'registrations/login.html')

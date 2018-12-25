@@ -4,24 +4,24 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, Group
 from .forms import SignUpPatientForm, SignUpMedWorkerForm
 from .helpers import gen_username, is_manager
+from django.http import Http404
 
 
 @login_required(redirect_field_name='')
 @user_passes_test(is_manager, redirect_field_name='')
 def index(request):
+    # TODO: orders in tabs, close order
     return HttpResponse('Manager page')
 
 
 @login_required(redirect_field_name='')
 @user_passes_test(is_manager, redirect_field_name='')
 def signup(request, profile):
-    # TODO: errors
     if request.method == 'POST':
         if profile == 'patient':
             form = SignUpPatientForm(request.POST)
         elif profile == 'medworker':
             form = SignUpMedWorkerForm(request.POST)
-        # TODO: else:
         if form.is_valid():
             user = User()
             username = gen_username(profile)
@@ -45,5 +45,6 @@ def signup(request, profile):
             form = SignUpPatientForm()
         elif profile == 'medworker':
             form = SignUpMedWorkerForm()
-        # TODO: else:
+        else:
+            raise Http404()
     return render(request, 'manager/sign_up.html', {'form': form})

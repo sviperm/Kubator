@@ -105,7 +105,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # The URL where requests are redirected for login
-LOGIN_URL = '/account/login/'
+LOGIN_URL = 'account:login'
+
 # The URL where requests are redirected after login
 # when the contrib.auth.login view gets no next parameter.
 LOGIN_REDIRECT_URL = 'account:home'
