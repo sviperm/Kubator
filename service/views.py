@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 from .handler import OrderDistributor
+from manager import helpers
 from .models import Service, Order, OrderStatus, PatientProfile
 from . import forms
 from . import logic
 
 
 @login_required(redirect_field_name='')
+@user_passes_test(helpers.is_patient, redirect_field_name='')
 def build_service_list(request, template, context):
     user = logic.is_patient(request.user)
     if user:
@@ -16,6 +18,7 @@ def build_service_list(request, template, context):
 
 
 @login_required(redirect_field_name='')
+@user_passes_test(helpers.is_patient, redirect_field_name='')
 def build_service(request, service_name, success_redirect='service_list'):
     user = logic.is_patient(request.user)
 
@@ -98,12 +101,20 @@ def fun(request):
 
 ###############################################################################
 def get_order_list(request):
-    context = logic.get_orders_info(request.user.id, is_done=False, closing_date=False)
+    context = logic.get_orders_info(
+        request.user.id, is_done=False, closing_date=False)
     context.update(forms.ContextArchive)
 
     return render(request, 'service/order_list.html', context=context)
 
 
 def get_archive(request):
-    context = logic.get_orders_info(request.user.id, is_done=True, creation_date=False)
+    context = logic.get_orders_info(
+        request.user.id, is_done=True, creation_date=False)
     return render(request, 'service/archive.html', context=context)
+
+
+@login_required(redirect_field_name='')
+@user_passes_test(helpers.is_medworker, redirect_field_name='')
+def medworker(request):
+    return render(request, 'service/medworker.html')

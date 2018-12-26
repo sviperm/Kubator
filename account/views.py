@@ -10,11 +10,9 @@ def home(request):
     if user.groups.filter(name='manager').exists():
         return redirect('manager:home')
     elif user.groups.filter(name='patient').exists():
-        # TODO: set url
-        return redirect('/admin/')
+        return redirect('/service/')
     elif user.groups.filter(name='medworker').exists():
-        # TODO: set urls
-        return redirect('/admin/')
+        return redirect('/service/medworker/')
     return HttpResponse("User don't have any role")
 
 

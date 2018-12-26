@@ -22,4 +22,6 @@ urlpatterns = [
     path('eating/', views.get_eating, name=names.FOOD_EATING),
     path('drinking/', views.get_drinking, name=names.FOOD_DRINKING),
 
+    path('medworker/', views.medworker, name='medworker'),
+
 ]
