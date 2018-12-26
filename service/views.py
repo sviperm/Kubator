@@ -8,7 +8,6 @@ from . import forms
 from . import logic
 
 
-@login_required(redirect_field_name='')
 @user_passes_test(helpers.is_patient, redirect_field_name='')
 def build_service_list(request, template, context):
     user = logic.is_patient(request.user)
@@ -17,7 +16,6 @@ def build_service_list(request, template, context):
     return redirect(logic.get_redirect_url(user))
 
 
-@login_required(redirect_field_name='')
 @user_passes_test(helpers.is_patient, redirect_field_name='')
 def build_service(request, service_name, success_redirect='service_list'):
     user = logic.is_patient(request.user)
@@ -114,7 +112,6 @@ def get_archive(request):
     return render(request, 'service/archive.html', context=context)
 
 
-@login_required(redirect_field_name='')
 @user_passes_test(helpers.is_medworker, redirect_field_name='')
 def medworker(request):
     return render(request, 'service/medworker.html')

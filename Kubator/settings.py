@@ -105,7 +105,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # The URL where requests are redirected for login
-LOGIN_URL = 'account:login'
+LOGIN_URL = 'account:home'
 
 # The URL where requests are redirected after login
 # when the contrib.auth.login view gets no next parameter.
@@ -129,3 +129,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]

@@ -2,18 +2,19 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from manager.helpers import is_manager, is_medworker, is_patient
 
 
-@login_required(redirect_field_name='')
 def home(request):
     user = request.user
-    if user.groups.filter(name='manager').exists():
+    if is_manager(user):
         return redirect('manager:home')
-    elif user.groups.filter(name='patient').exists():
-        return redirect('/service/')
-    elif user.groups.filter(name='medworker').exists():
-        return redirect('/service/medworker/')
-    return HttpResponse("User don't have any role")
+    elif is_patient(user):
+        return redirect('service/patient/')
+    elif is_medworker(user):
+        return redirect('service/medworker/')
+    else:
+        return redirect('account:login')
 
 
 @login_required(redirect_field_name='')

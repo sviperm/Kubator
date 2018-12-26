@@ -7,14 +7,12 @@ from .helpers import gen_username, is_manager
 from django.http import Http404
 
 
-@login_required(redirect_field_name='')
 @user_passes_test(is_manager, redirect_field_name='')
 def index(request):
     # TODO: orders in tabs, close order
     return HttpResponse('Manager page')
 
 
-@login_required(redirect_field_name='')
 @user_passes_test(is_manager, redirect_field_name='')
 def signup(request, profile):
     if request.method == 'POST':
