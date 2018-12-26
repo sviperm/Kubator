@@ -98,23 +98,12 @@ def fun(request):
 
 ###############################################################################
 def get_order_list(request):
-    profile = PatientProfile.objects.get(user_id=request.user.id)
-    statuses = OrderStatus.objects.all().filter(done=False)
+    context = logic.get_orders_info(request.user.id, is_done=False, closing_date=False)
+    context.update(forms.ContextArchive)
 
-    orders = Order.objects.filter(patient=profile, status__in=statuses)
-
-    context = {
-        'form': forms.ContextArchive[0],
-        'orders': orders,
-    }
-
-    return render(request, 'service/order_list', context=context)
+    return render(request, 'service/order_list.html', context=context)
 
 
 def get_archive(request):
-    profile = PatientProfile.objects.get(user_id=request.user.id)
-    statuses = OrderStatus.objects.all().filter(done=True)
-
-    orders = Order.objects.filter(patient=profile, status__in=statuses)
-
-    return render(request, 'service/archive', context={"orders": orders})
+    context = logic.get_orders_info(request.user.id, is_done=True, creation_date=False)
+    return render(request, 'service/archive.html', context=context)
