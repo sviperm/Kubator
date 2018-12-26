@@ -3,6 +3,7 @@ ALERT = 'alert'
 FUN = 'fun'
 
 SERVICE_LIST = 'service_list'
+ORDER_LIST = 'order_list'
 
 ESCORT_LIST = 'escort_list'
 ESCORT_WC = 'wc'

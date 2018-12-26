@@ -18,7 +18,7 @@ def gen_context_view(context_list):
 
 ContextServiceList = gen_context_view(
     [
-        gen_context_form(names.ARCHIVE, 'Мои заявки'),
+        gen_context_form(names.ORDER_LIST, 'Мои заявки'),
         gen_context_form(names.ALERT, 'ALERT'),
         gen_context_form(names.BABY_LIST, 'Ребенок'),
         gen_context_form(names.ESCORT_LIST, 'Сопровождение'),
@@ -49,3 +49,6 @@ ContextEscortList = gen_context_view(
     ]
 )
 
+ContextArchive = gen_context_view([
+    gen_context_form(names.ARCHIVE, 'Архив заявок'),
+])

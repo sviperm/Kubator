@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 from .handler import OrderDistributor
-from .models import Service
+from .models import Service, Order, OrderStatus, PatientProfile
 from . import forms
 from . import logic
 
@@ -97,5 +97,13 @@ def fun(request):
 
 
 ###############################################################################
+def get_order_list(request):
+    context = logic.get_orders_info(request.user.id, is_done=False, closing_date=False)
+    context.update(forms.ContextArchive)
+
+    return render(request, 'service/order_list.html', context=context)
+
+
 def get_archive(request):
-    return redirect('service_list')
+    context = logic.get_orders_info(request.user.id, is_done=True, creation_date=False)
+    return render(request, 'service/archive.html', context=context)
