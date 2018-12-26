@@ -76,3 +76,6 @@ class Order(models.Model):
     closing_date = models.DateTimeField(auto_now_add=False, auto_now=False,
                                         blank=True, null=True,
                                         verbose_name='Дата закрытия заявки')
+
+    def __str__(self):
+        return f"{self.patient.user.username} {self.service.name}"
