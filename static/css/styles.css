@@ -2,10 +2,11 @@
 	background-color:#c2d4d8;
 }
 .container{
-	margin-top:10%;
+	margin-top:4%;
+	margin-bottom:4%;
 	border:solid 1px;
 	background-color:#ffffff;
-	padding:40px;
+	padding:17px;
 	width:50%;
 	overflow:hidden;
 	border-radius:10px;
@@ -24,6 +25,9 @@
 }
 .h1{
 	text-align:center;
+}
+.h3 {
+    text-align: center;
 }
 #spec{
 	width:70%;
@@ -49,20 +53,20 @@
 	font-weight:bold;
 }
 #alert{
-	width:250%;
-	height:200px;
+	width:30%;
+	height:405px;
 	border:solid 1px;
 	border-color: black;
 	border-radius: 10px;
-	margin-right:9px;
+	margin-right:10px;
 	background-color:#FFC0CB;
 	color:black;
 	font-weight:bold;
 	font-size:200%;
 }
 #but{
-	width:110%;
-	height:151px;
+	width:100%;
+	height:100px;
 	border:solid 1px;
 	border-radius:10px;
 	font-size:150%;
@@ -70,17 +74,13 @@
 	margin-bottom:5px;
 	margin-right:1px;
 }
-a.btn-default{
+.btn-default{
 	border:solid 1px;
-	color: black;
-	padding-top: 15px;
 }
 #manag_but{
-	width: 100%;
+	width:49%;
 	height:60px;
 	overflow:hidden;
-	border-color: black;
-	border-radius: 2px;
 }
 .nav-link{
 	color:black;
@@ -89,3 +89,8 @@ a.btn-default{
 	margin-right:2px;
 	margin-left:2px;
 }
+.textarea {
+	width:100%;
+	height:100%;
+}
+.col-1{border:solid 1px;}

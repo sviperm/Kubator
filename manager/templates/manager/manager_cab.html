@@ -18,19 +18,20 @@
 
 {% block content %}
 <div class="container">
-    <div class="float-right"><button type="button" class="btn btn-default">Выход</button></div><br><br>
-    <div class="h1">Добро пожаловать!</div><br><br>
-    <div class="row">
-        <div class="col-md-6">
-            <form action="/manager/sign-up/medworker">
-                <input type="submit" class="btn btn-default" id="manag_but" value="Зарегистрировать
-                работника" /></form>
-        </div>
-        <div class="col-md-6">
-            <form action="/manager/sign-up/patient">
-                <input type="submit" class="btn btn-default" id="manag_but" value="Зарегистрировать
-                пациента" /></form>
-        </div>
+    <div class="float-right">
+        <form action="{% url 'account:logout' %}"><button type="sumbit" class="btn btn-default">Выход</button></form>
+    </div><br><br>
+    <div class="h1">Добро пожаловать!</div>
+    <div class="h3">{{last_name}} {{first_name}} {{middle_name}}</div>
+    <br>
+    <div id='cc'>
+        <form method='post'>
+            {% csrf_token %}
+            <button type="sumbit" class="btn btn-default" id="manag_but" name='redirect' value='medworker'>Зарегистрировать
+                работника</button>
+            <button type="sumbit" class="btn btn-default" id="manag_but" name='redirect' value='patient'>Зарегистрировать
+                пациентку</button>
+        </form>
     </div><br>
     <div>
         <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
@@ -40,7 +41,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                    aria-selected="false">Текущее</a>
+                    aria-selected="false">Текущие</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
