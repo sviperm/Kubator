@@ -23,6 +23,8 @@ urlpatterns = [
     path('patient/eating/', views.get_eating, name=names.FOOD_EATING),
     path('patient/drinking/', views.get_drinking, name=names.FOOD_DRINKING),
 
-    path('medworker/', views.medworker, name='medworker'),
+    path('medworker/', views.get_new_order, name=names.MEDWORKER_HOME),
+    path('medworker/open', views.open_order, name=names.OPEN_ORDER),
+    path('medworker/close', views.close_order, name=names.CLOSE_ORDER),
 
 ]
