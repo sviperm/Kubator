@@ -46,90 +46,86 @@
             <li class="nav-item">
                 <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
                     aria-selected="false">Выполненные</a>
-        </ul><br>
+        </ul>
         <div class="tab-content" id="myTabContent">
             <!-- Отсюда начинается новые-->
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                {% for order in new_orders %}
+                <br>
                 <div id="border">
                     <div id="border1">
-                        <p>Отнести ребенка</p>
+                        <p>Услуга: {{order.service}}</p>
                     </div>
                     <div id="border1">
-                        <p>Демьянов А.В</p>
+                        <p>Пациентка: {{order.patient}}</p>
                     </div>
                     <div id="border1">
-                        <p>5 палата</p>
-                    </div>
-                </div><br>
-                <div id="border">
-                    <div id="border1">
-                        <p>Принести воды</p>
-                    </div>
-                    <div id="border1">
-                        <p>Демьянов А.В</p>
-                    </div>
-                    <div id="border1">
-                        <p>6 палата</p>
+                        <p>Палата: {{order.patient.ward}}</p>
                     </div>
                 </div>
+                {% endfor %}
             </div>
+            <!-- Отсюда начинаются текущие-->
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                <!-- Отсюда начинаются текущие-->
+                {% for order in in_proc_orders %}
+                <br>
                 <div id="border">
                     <div id="border1">
-                        <p>Включить фильм</p>
+                        <p>Услуга: {{order.service}}</p>
                     </div>
                     <div id="border1">
-                        <p>Авлетина Пациентковна (пациентка)</p>
+                        <p>Пациентка: {{order.patient}}</p>
                     </div>
                     <div id="border1">
-                        <p>Демьянов А.А (врач)</p>
+                        <p>Палата: {{order.patient.ward}}</p>
                     </div>
                     <div id="border1">
-                        <p>15:05 (начало выполнения)</p>
-                    </div>
-                    <div id="bc"><button type="button" class="btn btn-default">Закрыть заявку</button></div>
-                </div><br>
-                <div id="border">
-                    <div id="border1">
-                        <p>Принести ребенка</p>
+                        <p>Работник: {{order.worker}}</p>
                     </div>
                     <div id="border1">
-                        <p>Иванова А.А (пациентка)</p>
+                        <p>Время выполнения:
+                        <br>
+                        {{order.opening_date|date:"d.m.Y - H:i"}}
+                        <br>
+                        ...
+                        </p>
                     </div>
-                    <div id="border1">
-                        <p>Сурьянов А.А (врач)</p>
-                    </div>
-                    <div id="border1">
-                        <p>15:15 (начало выполнения)</p>
-                    </div>
-                    <div id="bc"><button type="button" class="btn btn-default">Закрыть заявку</button></div>
-                </div><br>
+                    <form action="{% url 'manager:home' %}" method="post">
+                        {% csrf_token %}
+                        <div id="bc"><button type="sumbit" class="btn btn-default" name="close-order" value="{{order.id}}">Закрыть заявку</button></div>
+                    </form>
+                </div>
+                {% endfor %}
             </div>
+            <!-- Отсюда начинаются выполненные-->
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                <!-- Отсюда начинаются выполненные-->
+                {% for order in done_orders %}
+                <br>
                 <div id="border">
                     <div id="border1">
-                        <p>Принести еду</p>
+                        <p>Услуга: {{order.service}}</p>
                     </div>
                     <div id="border1">
-                        <p>Петрова А.В</p>
+                        <p>Пациентка: {{order.patient}}</p>
                     </div>
                     <div id="border1">
-                        <p>1 палата</p>
-                    </div>
-                </div><br>
-                <div id="border">
-                    <div id="border1">
-                        <p>Отвести в туалет</p>
+                        <p>Палата: {{order.patient.ward}}</p>
                     </div>
                     <div id="border1">
-                        <p>Демьянова А.В</p>
+                        <p>Работник: {{order.worker}}</p>
                     </div>
                     <div id="border1">
-                        <p>2 палата</p>
+                        <p>Время выполнения:
+                        <br>
+                        {{order.opening_date|date:"d.m.Y - H:i"}}
+                        <br>
+                        {{order.closing_date|date:"d.m.Y - H:i"}}</p>
+                    </div>
+                    <div id="border1">
+                        <p>Комментарий:<br>{{order.report}}</p>
                     </div>
                 </div>
+                {% endfor %}
             </div>
         </div>
     </div>

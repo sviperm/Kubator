@@ -5,22 +5,36 @@ from django.contrib.auth.models import User, Group
 from .forms import SignUpPatientForm, SignUpMedWorkerForm
 from .models import ManagerProfile
 from .helpers import gen_username, is_manager
+from service.models import Order, OrderStatus
 
 
 @user_passes_test(is_manager, redirect_field_name='', login_url='account:home')
 def index(request):
-    # TODO: orders in tabs, close order
     if request.method == 'POST':
-        if request.POST['redirect'] == 'medworker':
-            return redirect('manager:signup', 'medworker')
-        elif request.POST['redirect'] == 'patient':
-            return redirect('manager:signup', 'patient')
+        if 'redirect' in request.POST:
+            if request.POST['redirect'] == 'medworker':
+                return redirect('manager:signup', 'medworker')
+            elif request.POST['redirect'] == 'patient':
+                return redirect('manager:signup', 'patient')
+        elif 'close-order' in request.POST:
+            # TODO: close order
+            # order_id = request.POST['close-order']
+            return HttpResponse(request.POST['close-order'])
     else:
         middle_name = ManagerProfile.objects.get(
             user=request.user.pk).middle_name
+        status_new = OrderStatus.objects.get(name='Ожидает исполнения')
+        status_proc = OrderStatus.objects.get(name='В процессе')
+        status_done = OrderStatus.objects.get(name='Выполнено')
+        new_orders = Order.objects.filter(status=status_new)
+        in_proc_orders = Order.objects.filter(status=status_proc)
+        done_orders = Order.objects.filter(status=status_done)
         context = {'last_name': request.user.last_name,
                    'first_name': request.user.first_name,
-                   'middle_name': middle_name}
+                   'middle_name': middle_name,
+                   'new_orders': new_orders,
+                   'in_proc_orders': in_proc_orders,
+                   'done_orders': done_orders}
         return render(request, 'manager/manager_cab.html', context)
 
 

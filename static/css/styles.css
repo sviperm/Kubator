@@ -40,7 +40,7 @@
 	text-align:center;
 }
 #border1{
-	border:solid 1px;
+	/* border:solid 1px; */
 	padding-left:15px;
 	margin-bottom:2px;
 }

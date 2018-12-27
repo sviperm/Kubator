@@ -23,14 +23,15 @@ class MedWorkerProfile(models.Model):
     )
 
     def __str__(self):
-        return f'{self.user.username} {self.raw_password} {self.user.last_name} {self.user.first_name} {self.middle_name}: {self.position}'
+
+        return f'{self.user.last_name} {self.user.first_name[0]}. {self.middle_name[0]}.'
 
 
 class Ward(models.Model):
     number = models.CharField(max_length=2, verbose_name='Номер палаты')
 
     def __str__(self):
-        return self.number
+        return f'{self.number} палата'
 
 
 class PatientProfile(models.Model):
