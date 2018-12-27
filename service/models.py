@@ -26,11 +26,16 @@ class MedWorkerProfile(models.Model):
         return f'{self.user.username} {self.raw_password} {self.user.last_name} {self.user.first_name} {self.middle_name}: {self.position}'
 
 
+class Ward(models.Model):
+    number = models.CharField(max_length=2, verbose_name='Номер палаты')
+
+
 class PatientProfile(models.Model):
     user = models.OneToOneField(User,
                                 on_delete=models.CASCADE,
                                 verbose_name="Пользователь")
     raw_password = models.CharField(max_length=8, verbose_name="Пароль")
+    ward = models.ForeignKey(Ward, on_delete=models.CASCADE, verbose_name="Номер палаты")
     middle_name = models.CharField(max_length=100, verbose_name="Отчество")
     birth_date = models.DateField(null=False, verbose_name="Дата рождения")
     address = models.TextField(verbose_name="Адрес")
