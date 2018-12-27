@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for c in context_forms %}
+    <form action="{% url c.url %}" name="{{c.name}}">
+        {% csrf_token %}
+        <button type="submit">{{c.value}}</button>
+    </form>
+    <p></p>
+{% endfor %}
+
+{{info}}
+</body>
+</html>
