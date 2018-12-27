@@ -45,6 +45,17 @@ class OrderDistributor(metaclass=Singleton):
         to_do = models.Order.objects.all().filter(status__in=not_done)
         return list(to_do)
 
+    def get_order(self, worker_id):
+        if self.is_worker_free(worker_id):
+            return None
+        return self.workers[worker_id]
+
+    def get_order_info(self, worker_id):
+        order = self.get_order(worker_id)
+        if order:
+            return order.patient.user.username
+        return None
+
     def get_order_list(self):
         """
         :return: текущий лист с объектами класса Order

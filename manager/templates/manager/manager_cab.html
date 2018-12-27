@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+
+{% block js %}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+{% endblock js %}
+
+
+{% block title %}
+<title> Личный кабинет менеджера </title>
+{% endblock title %}
+
+
+{% block content %}
+<div class="container">
+    <div class="float-right">
+        <form action="{% url 'account:logout' %}"><button type="sumbit" class="btn btn-default">Выход</button></form>
+    </div><br><br>
+    <div class="h1">Добро пожаловать!</div>
+    <div class="h3">{{last_name}} {{first_name}} {{middle_name}}</div>
+    <br>
+    <div id='cc'>
+        <form method='post'>
+            {% csrf_token %}
+            <button type="sumbit" class="btn btn-default" id="manag_but" name='redirect' value='medworker'>Зарегистрировать
+                работника</button>
+            <button type="sumbit" class="btn btn-default" id="manag_but" name='redirect' value='patient'>Зарегистрировать
+                пациентку</button>
+        </form>
+    </div><br>
+    <div>
+        <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="nav" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                    aria-controls="home" aria-selected="true">Новые</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                    aria-selected="false">Текущие</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+                    aria-selected="false">Выполненные</a>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <!-- Отсюда начинается новые-->
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                {% for order in new_orders %}
+                <br>
+                <div id="border">
+                    <div id="border1">
+                        <p>Услуга: {{order.service}}</p>
+                    </div>
+                    <div id="border1">
+                        <p>Пациентка: {{order.patient}}</p>
+                    </div>
+                    <div id="border1">
+                        <p>Палата: {{order.patient.ward}}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- Отсюда начинаются текущие-->
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                {% for order in in_proc_orders %}
+                <br>
+                <div id="border">
+                    <div id="border1">
+                        <p>Услуга: {{order.service}}</p>
+                    </div>
+                    <div id="border1">
+                        <p>Пациентка: {{order.patient}}</p>
+                    </div>
+                    <div id="border1">
+                        <p>Палата: {{order.patient.ward}}</p>
+                    </div>
+                    <div id="border1">
+                        <p>Работник: {{order.worker}}</p>
+                    </div>
+                    <div id="border1">
+                        <p>Время выполнения:
+                        <br>
+                        {{order.opening_date|date:"d.m.Y - H:i"}}
+                        <br>
+                        ...
+                        </p>
+                    </div>
+                    <form action="{% url 'manager:home' %}" method="post">
+                        {% csrf_token %}
+                        <div id="bc"><button type="sumbit" class="btn btn-default" name="close-order" value="{{order.id}}">Закрыть заявку</button></div>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- Отсюда начинаются выполненные-->
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                {% for order in done_orders %}
+                <br>
+                <div id="border">
+                    <div id="border1">
+                        <p>Услуга: {{order.service}}</p>
+                    </div>
+                    <div id="border1">
+                        <p>Пациентка: {{order.patient}}</p>
+                    </div>
+                    <div id="border1">
+                        <p>Палата: {{order.patient.ward}}</p>
+                    </div>
+                    <div id="border1">
+                        <p>Работник: {{order.worker}}</p>
+                    </div>
+                    <div id="border1">
+                        <p>Время выполнения:
+                        <br>
+                        {{order.opening_date|date:"d.m.Y - H:i"}}
+                        <br>
+                        {{order.closing_date|date:"d.m.Y - H:i"}}</p>
+                    </div>
+                    <div id="border1">
+                        <p>Комментарий:<br>{{order.report}}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
