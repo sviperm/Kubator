@@ -5,6 +5,10 @@ from django.contrib.auth.decorators import login_required
 from manager.helpers import is_manager, is_medworker, is_patient
 
 
+def error_404_view(request, exception):
+    return render(request, '404.html')
+
+
 def home(request):
     user = request.user
     if is_manager(user):
