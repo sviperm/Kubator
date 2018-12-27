@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+
+{% block js %}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+{% endblock js %}
+
+
+{% block title %}
+<title> Личный кабинет менеджера </title>
+{% endblock title %}
+
+
+{% block content %}
+<form method="post">
+    <div class="container">
+        <!-- Общий контейнер-->
+        <div class="float-right"><button type="button" class="btn btn-default">Выход</button></div><br><br>
+        <div class="h1">Добро пожаловать!</div><br><br>
+        <!--Сюда будет выводиться информация о владельце кабинета-->
+        <div>
+            <button type="button" class="btn btn-default" id="manag_but">Зарегистрировать работника</button>
+            <!--Кнопка Невыполненные заявки-->
+            <button type="button" class="btn btn-default" id="manag_but">Зарегистрировать пациента</button>
+        </div><br>
+        <div>
+            <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="nav" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                        aria-controls="home" aria-selected="true">Новые</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                        aria-selected="false">Текущее</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+                        aria-selected="false">Выполненные</a>
+            </ul><br>
+            <div class="tab-content" id="myTabContent">
+                <!-- Отсюда начинается новые-->
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div id="border">
+                        <div id="border1">
+                            <p>Отнести ребенка</p>
+                        </div>
+                        <div id="border1">
+                            <p>Демьянов А.В</p>
+                        </div>
+                        <div id="border1">
+                            <p>5 палата</p>
+                        </div>
+                    </div><br>
+                    <div id="border">
+                        <div id="border1">
+                            <p>Принести воды</p>
+                        </div>
+                        <div id="border1">
+                            <p>Демьянов А.В</p>
+                        </div>
+                        <div id="border1">
+                            <p>6 палата</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <!-- Отсюда начинаются текущие-->
+                    <div id="border">
+                        <div id="border1">
+                            <p>Включить фильм</p>
+                        </div>
+                        <div id="border1">
+                            <p>Авлетина Пациентковна (пациентка)</p>
+                        </div>
+                        <div id="border1">
+                            <p>Демьянов А.А (врач)</p>
+                        </div>
+                        <div id="border1">
+                            <p>15:05 (начало выполнения)</p>
+                        </div>
+                        <div id="bc"><button type="button" class="btn btn-default">Закрыть заявку</button></div>
+                    </div><br>
+                    <div id="border">
+                        <div id="border1">
+                            <p>Принести ребенка</p>
+                        </div>
+                        <div id="border1">
+                            <p>Иванова А.А (пациентка)</p>
+                        </div>
+                        <div id="border1">
+                            <p>Сурьянов А.А (врач)</p>
+                        </div>
+                        <div id="border1">
+                            <p>15:15 (начало выполнения)</p>
+                        </div>
+                        <div id="bc"><button type="button" class="btn btn-default">Закрыть заявку</button></div>
+                    </div><br>
+                </div>
+                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                    <!-- Отсюда начинаются выполненные-->
+                    <div id="border">
+                        <div id="border1">
+                            <p>Принести еду</p>
+                        </div>
+                        <div id="border1">
+                            <p>Петрова А.В</p>
+                        </div>
+                        <div id="border1">
+                            <p>1 палата</p>
+                        </div>
+                    </div><br>
+                    <div id="border">
+                        <div id="border1">
+                            <p>Отвести в туалет</p>
+                        </div>
+                        <div id="border1">
+                            <p>Демьянова А.В</p>
+                        </div>
+                        <div id="border1">
+                            <p>2 палата</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock content %}

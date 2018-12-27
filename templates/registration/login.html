@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 
 
+{% block title %}
+  <title> Kubator </title>
+{% endblock title %}
+	
+
 {% block content %}
 	<form method="post">
 		{% csrf_token %}

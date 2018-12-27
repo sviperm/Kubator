@@ -5,9 +5,10 @@
 	margin-top:10%;
 	border:solid 1px;
 	background-color:#ffffff;
-	padding-top:10px;
-	padding-bottom:10px;
+	padding:40px;
 	width:50%;
+	overflow:hidden;
+	border-radius:10px;
 }
 #lab{
 	font-weight:bold;
@@ -15,14 +16,18 @@
 .text{
 	font-weight:bold;
 	border:solid 1px;
-	text-align:center;
+}
+#p{
+	border:solid 1px;
+	font-weight:bold;
+	padding-left:15px;
 }
 .h1{
 	text-align:center;
 }
 #spec{
-	width:500px;
-	height:100px;
+	width:70%;
+	height:150px;
 }
 #cc{
 	text-align:center;
@@ -30,12 +35,22 @@
 #bc{
 	text-align:center;
 }
-#block1{
-	left:
+#border1{
+	border:solid 1px;
+	padding-left:15px;
+	margin-bottom:2px;
+}
+#border{
+	border:solid 1px;
+	padding-top:15px;
+	padding-left:15px;
+	padding-bottom:15px;
+	padding-right:15px;
+	font-weight:bold;
 }
 #alert{
-	width:300px;
-	height:306px;
+	width:250%;
+	height:200px;
 	border:solid 1px;
 	border-color: black;
 	border-radius: 10px;
@@ -46,7 +61,7 @@
 	font-size:200%;
 }
 #but{
-	width:222px;
+	width:110%;
 	height:151px;
 	border:solid 1px;
 	border-radius:10px;
@@ -57,4 +72,16 @@
 }
 .btn-default{
 	border:solid 1px;
+}
+#manag_but{
+	width:49%;
+	height:60px;
+	overflow:hidden;
+}
+.nav-link{
+	color:black;
+	border:solid 2px;
+	background-color:#c2d4d8;
+	margin-right:2px;
+	margin-left:2px;
 }
