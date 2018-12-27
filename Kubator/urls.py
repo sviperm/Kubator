@@ -1,3 +1,4 @@
+from django.conf.urls import handler404
 """Kubator URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -16,10 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView
+from django.conf.urls import handler404
 
 urlpatterns = [
     path('', include('account.urls')),
     path('admin/', admin.site.urls),
-    path('service/', include('service.urls'), name='service'),
-    path('manager/', include('manager.urls'), name='manager'),
+    # path('medworker/', include('service.med_worker_urls')),
+    path('service/', include('service.urls')),
+    path('manager/', include('manager.urls')),
 ]
+
+
+handler404 = 'account.views.error_404_view'

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+
+  {% block js %}
+  {% comment %} JavaScript вставлять сюда {% endcomment %}
+  {% endblock js %}
+
+  {% block title %}
+  {% comment %} Название вставлять сюда {% endcomment %}
+  {% endblock title %}
+
+</head>
+
+<body id="body">
+
+  {% block content %}
+  {% comment %} Вставлять сюда {% endcomment %}
+  {% endblock %}
+
+</body>
+
+</html>

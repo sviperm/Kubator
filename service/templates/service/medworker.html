@@ -5,7 +5,6 @@
     <title>Title</title>
 </head>
 <body>
-
 {% for c in context_forms %}
     <form action="{% url c.url %}" name="{{c.name}}">
         {% csrf_token %}
@@ -14,5 +13,6 @@
     <p></p>
 {% endfor %}
 
+{{info}}
 </body>
 </html>

@@ -1,47 +1,42 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 
+from manager import helpers as manager
 from .handler import OrderDistributor
 from .models import Service
-from . import forms
-from . import logic
+from .forms import OrderReportForm
+from . import contexts
+from . import helpers
+from . import url_names_config as names
 
 
-@login_required(redirect_field_name='')
+@user_passes_test(manager.is_patient, redirect_field_name='', login_url='account:home')
 def build_service_list(request, template, context):
-    user = logic.is_patient(request.user)
-    if user:
-        return render(request, template, context)
-    return redirect(logic.get_redirect_url(user))
+    return render(request, template, context)
 
 
-@login_required(redirect_field_name='')
-def build_service(request, service_name, success_redirect='service_list'):
-    user = logic.is_patient(request.user)
+@user_passes_test(manager.is_patient, redirect_field_name='', login_url='account:home')
+def build_service(request, service_name, success_redirect=names.SERVICE_LIST):
+    service_id = Service.objects.get(name__iexact=service_name).id
 
-    if user:
-        user_id = user.id
-        service_id = Service.objects.get(name__iexact=service_name).id
+    dsys = OrderDistributor()  # init order distribution system
+    dsys.add_order(request.user.id, service_id)
 
-        dsys = OrderDistributor()  # init order distribution system
-        dsys.add_order(user_id, service_id)
-
-        return redirect(success_redirect)
-    return redirect(logic.get_redirect_url(user))
+    return redirect(success_redirect)
 
 
 ###############################################################################
 def get_service_list(request):
     return build_service_list(request,
                               template='service/service_list.html',
-                              context=forms.ContextServiceList)
+                              context=contexts.ContextServiceList)
 
 
 ###############################################################################
 def get_food_list(request):
     return build_service_list(request,
                               template='service/food_list.html',
-                              context=forms.ContextFoodList)
+                              context=contexts.ContextFoodList)
 
 
 def get_eating(request):
@@ -56,7 +51,7 @@ def get_drinking(request):
 def get_baby_list(request):
     return build_service_list(request,
                               template='service/baby_list.html',
-                              context=forms.ContextBabyList)
+                              context=contexts.ContextBabyList)
 
 
 def bring_baby(request):
@@ -71,7 +66,7 @@ def carry_out_baby(request):
 def get_escort_list(request):
     return build_service_list(request,
                               template='service/escort_list.html',
-                              context=forms.ContextEscortList)
+                              context=contexts.ContextEscortList)
 
 
 def escort_to_wc(request):
@@ -97,5 +92,56 @@ def fun(request):
 
 
 ###############################################################################
+def get_order_list(request):
+    context = helpers.get_orders_info(
+        request.user.id, is_done=False, closing_date=False)
+    context.update(contexts.ContextArchive)
+
+    return render(request, 'service/order_list.html', context=context)
+
+
 def get_archive(request):
-    return redirect('service_list')
+    context = helpers.get_orders_info(
+        request.user.id, is_done=True, creation_date=False)
+    return render(request, 'service/archive.html', context=context)
+
+
+###############################################################################
+@user_passes_test(manager.is_medworker, redirect_field_name='', login_url='account:home')
+def get_new_order(request):
+    worker_id = request.user.id
+    dsys = OrderDistributor()
+    context = {}
+
+    if helpers.is_in_process(worker_id):
+        return redirect(names.CLOSE_ORDER)
+
+    context.update({'info': dsys.get_order_info(worker_id)})
+    context.update(contexts.ContextOpenOrder)
+
+    return render(request, 'service/medworker.html', context)
+
+
+@user_passes_test(manager.is_medworker, redirect_field_name='', login_url='account:home')
+def open_order(request):
+    worker_id = request.user.id
+    if not helpers.is_in_process(worker_id):
+        dsys = OrderDistributor()
+        dsys.open(worker_id)
+    return redirect(names.CLOSE_ORDER)
+
+
+@user_passes_test(manager.is_medworker, redirect_field_name='', login_url='account:home')
+def close_order(request):
+    if request.method == "POST":
+        form = OrderReportForm(request.POST)
+        if form.is_valid():
+            report = form.cleaned_data['report']
+
+            dsys = OrderDistributor()
+            dsys.close(request.user.id, report)
+            return redirect(names.MEDWORKER_HOME)
+
+    form = OrderReportForm()
+
+    return render(request, 'close_order.html', {'form': form})

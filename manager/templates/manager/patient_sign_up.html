@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+<title>Регистрация пациентки</title>
+{% endblock title %}
+
+
+{% block content %}
+
+<div class="container">
+    <form action="{% url 'manager:home' %}">
+        <button type="submit" class="btn btn-default">Назад</button>
+    </form>
+    <div class="h1">Регистрация пациентки</div><br>
+    <form method="post">
+        {% csrf_token %}
+        <div><input type="text" class="form-control" placeholder="Фамилия" name="last_name" maxlength="100" required=""
+                id="id_last_name"></div><br>
+        <div><input type="text" class="form-control" placeholder="Имя" name="first_name" maxlength="100" required="" id="id_first_name"></div><br>
+        <div><input type="text" class="form-control" placeholder="Отчество" name="middle_name" maxlength="100" required=""
+                id="id_middle_name"></div><br>
+        <div><input type="date" class="form-control" name="birth_date" required=""
+                id="id_birth_date"></div><br>
+        {% comment %} <input type="date" name="birth_date" required="" id="id_birth_date"> {% endcomment %}
+        <div class="form-group">
+            <textarea class="form-control" name="address" rows="3" required="" id="id_address" placeholder="Адрес"></textarea>
+        </div>
+        <div><input type="text" class="form-control" placeholder="Номер телефона" name="contact_phone"
+                maxlength="16" required="" id="id_contact_phone"></div><br>
+        <div class="input-group mb-3">
+            <select class="custom-select" name="ward" required="" id="id_ward">
+                {% for select in form.ward %}
+                <p>{{select}}</p>
+                {% endfor %}
+            </select>
+        </div>
+        <div><button type="submit" class="btn btn-default">Сохранить</button></div>
+    </form>
+</div>
+{% endblock content %}

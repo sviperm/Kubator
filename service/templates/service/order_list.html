@@ -5,6 +5,14 @@
     <title>Title</title>
 </head>
 <body>
+{% for c in context_forms %}
+    <form action="{% url c.url %}" name="{{c.name}}">
+        {% csrf_token %}
+        <button type="submit">{{c.value}}</button>
+    </form>
+    <p></p>
+{% endfor %}
+
 {% for info in info %}
     <p>############################################</p>
     <p>{{info.0}}</p>
