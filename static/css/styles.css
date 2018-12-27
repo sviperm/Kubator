@@ -70,13 +70,17 @@
 	margin-bottom:5px;
 	margin-right:1px;
 }
-.btn-default{
+a.btn-default{
 	border:solid 1px;
+	color: black;
+	padding-top: 15px;
 }
 #manag_but{
-	width:49%;
+	width: 100%;
 	height:60px;
 	overflow:hidden;
+	border-color: black;
+	border-radius: 2px;
 }
 .nav-link{
 	color:black;
