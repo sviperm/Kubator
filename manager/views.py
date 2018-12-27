@@ -10,7 +10,7 @@ from django.http import Http404
 @user_passes_test(is_manager, redirect_field_name='')
 def index(request):
     # TODO: orders in tabs, close order
-    return HttpResponse('Manager page')
+    return render(request, 'manager/manager_cab.html')
 
 
 @user_passes_test(is_manager, redirect_field_name='')
