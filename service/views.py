@@ -29,6 +29,7 @@ def build_service(request, service_name, success_redirect=names.SERVICE_LIST):
 def get_service_list(request):
     context = contexts.ContextServiceList
     context.update({"my_orders": contexts.ContextMyOrders})
+    context.update({"fio": helpers.get_user_fio(request.user.id, 'pat')})
     return build_service_list(request,
                               template='service/service_list.html',
                               context=contexts.ContextServiceList)
@@ -120,7 +121,7 @@ def get_new_order(request):
 
     context.update({'info': dsys.get_order_info(worker_id)})
     context.update(contexts.ContextOpenOrder)
-
+    context.update({'fio': helpers.get_user_fio(worker_id, 'med')})
     return render(request, 'service/medworker.html', context)
 
 
@@ -147,7 +148,7 @@ def close_order(request):
     form = OrderReportForm()
     dsys = OrderDistributor()
     context = contexts.ContextCloseOrder
-    context.update({'info': dsys.get_order_info(request.user.id)})
+    context.update({'info': dsys.get_order_info(request.user.id, time=True)})
     context.update({'form': form})
 
     return render(request, 'service/close_order.html', context)

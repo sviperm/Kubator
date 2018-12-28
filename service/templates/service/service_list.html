@@ -21,7 +21,7 @@
             </div><br><br>
         </form>
 
-        <div class="h1"><p>Добро пожаловать!</p><p>Авлетина Пациентковна</p></div><br>
+        <div class="h1"><p>Добро пожаловать!</p><p>{{fio}}</p></div><br>
             {% for c in context_forms %}
             <form method="get" action="{% url c.url %}">
                 <button type="submit" class="{{c.class}}" id="but">{{c.value}}</button>

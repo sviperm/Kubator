@@ -11,7 +11,9 @@
     <form action="{%url 'account:logout'%}" method="get">
         <div class="float-right"><button type="submit" class="btn btn-default">Выход</button></div><br><br>
     </form>
-    <div class="h1">Добро пожаловать</div><br><br><br>
+    <div class="h1">Добро пожаловать</div>
+    <div class="h3">{{fio}}</div><br>
+    {% if info %}
     <div id="border">
         <div id="border1"><p>{{info.service}}</p></div>
         <div id="border1"><p>{{info.fio}}</p></div>
@@ -22,5 +24,12 @@
             <button type="submit" class="{{c.class}}" id="but">{{c.value}}</button>
         </form>
     {% endfor %}
+    {% else %}
+    <div id="border">
+        <div class="h3">
+            <p>Пусто ️🗑️</p>
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% endblock content %}
