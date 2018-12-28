@@ -137,6 +137,9 @@ def open_order(request):
 
 @user_passes_test(manager.is_medworker, redirect_field_name='', login_url='account:home')
 def close_order(request):
+    if helpers.is_done(request.user.id):
+        return redirect(names.MEDWORKER_HOME)
+
     if request.method == "POST":
         form = OrderReportForm(request.POST)
         if form.is_valid():
