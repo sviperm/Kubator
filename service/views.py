@@ -90,8 +90,9 @@ def alert(request):
 
 
 ###############################################################################
+@user_passes_test(manager.is_patient, redirect_field_name='', login_url='account:home')
 def fun(request):
-    return redirect('service_list')
+    return render(request, 'service/fun.html')
 
 
 ###############################################################################
