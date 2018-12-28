@@ -7,7 +7,9 @@
 
 {% block content %}
 <div class="container">
-        <div><button type="button" class="btn btn-default">Назад</button></div>
+    <form action="{% url 'service_list' %} " method="get">
+        <button type="submit" class="btn btn-default">Назад</button>
+    </form>
         <div class="h1">Развлечения</div><br><br>
         <div id="bc">
             <form action="https://www.ivi.ru/">
