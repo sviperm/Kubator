@@ -9,16 +9,37 @@ def is_patient(user):
 
 
 def get_orders_info(patient_id, is_done, creation_date=True, opening_date=True, closing_date=True):
-    datetime_format = "%Y-%m-%d %H:%M:%S"
+
+    def get_names(order_querys):
+        fio_list = []
+        for order in order_querys:
+            if order.worker:
+                last = order.worker.user.last_name.title()
+                first = order.worker.user.first_name[0].upper()
+                middle = order.worker.middle_name[0].upper()
+
+                fio_list.append(
+                    f'{last} {first}.{middle}.'
+                )
+            else:
+                fio_list.append(order.status.name)
+
+        return fio_list
+
+    datetime_format = "%Y-%m-%d %H:%M"  # "%Y-%m-%d %H:%M:%S"
 
     profile = PatientProfile.objects.get(user_id=patient_id)
     statuses = OrderStatus.objects.all().filter(done=is_done)
     orders = Order.objects.filter(patient=profile, status__in=statuses)
 
+    # TODO достать из бд имена врачей по заказам
+    # TODO дата: чм_начало - чм_конец
+
     if len(orders) > 0:
 
         to_zip = [
             [o.service.name for o in orders],
+            get_names(orders),
         ]
 
         if creation_date:

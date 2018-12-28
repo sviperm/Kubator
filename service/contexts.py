@@ -1,12 +1,12 @@
 from . import url_names_config as names
 
 
-def gen_context_form(url_name, button_value):
+def gen_context_form(url_name, button_value, button_class="btn btn-default"):
 
     return {
-        'name': url_name,
         'url': url_name,
         'value': button_value,
+        'class': button_class,
     }
 
 
@@ -16,10 +16,12 @@ def gen_context_view(context_list):
     }
 
 
+ContextMyOrders = gen_context_form(names.ORDER_LIST, 'Мои заявки')
+ContextExit = {}
+
 ContextServiceList = gen_context_view(
     [
-        gen_context_form(names.ORDER_LIST, 'Мои заявки'),
-        gen_context_form(names.ALERT, 'ALERT'),
+        gen_context_form(names.ALERT, 'ALERT', button_class="btn btn-danger"),
         gen_context_form(names.BABY_LIST, 'Ребенок'),
         gen_context_form(names.ESCORT_LIST, 'Сопровождение'),
         gen_context_form(names.FOOD_LIST, 'Питание'),

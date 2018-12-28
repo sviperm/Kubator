@@ -1,15 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-{% for info in info %}
-    <p>############################################</p>
-    <p>{{info.0}}</p>
-    <p>{{patient_name }} {{info.1}} {{info.2}}</p>
+{% extends 'base.html' %}
+
+{% block title %}
+<title> Архив заявок </title>
+{% endblock title %}
+
+
+{% block content %}
+<div class="container">
+    <form action="{% url 'service_list' %} " method="get">
+        <button type="submit" class="btn btn-default">Назад</button>
+    </form>
+    <div class="h1">Архив заявок</div><br><br><br>
+
+{% for i in info %}
+    <div id="border">
+        <div id="border1"><p>{{i.0}}</p></div>
+        <div id="border1"><p>{{patient_name }}</p></div>
+        <div id="border1"><p>{{i.1}} - {{i.2}}</p></div>
+    </div>
 {% endfor %}
 
-</body>
-</html>
+</div>
+{% endblock content %}

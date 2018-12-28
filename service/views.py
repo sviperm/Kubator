@@ -27,6 +27,8 @@ def build_service(request, service_name, success_redirect=names.SERVICE_LIST):
 
 ###############################################################################
 def get_service_list(request):
+    context = contexts.ContextServiceList
+    context.update({"my_orders": contexts.ContextMyOrders})
     return build_service_list(request,
                               template='service/service_list.html',
                               context=contexts.ContextServiceList)
@@ -143,5 +145,9 @@ def close_order(request):
             return redirect(names.MEDWORKER_HOME)
 
     form = OrderReportForm()
+    dsys = OrderDistributor()
+    context = contexts.ContextCloseOrder
+    context.update({'info': dsys.get_order_info(request.user.id)})
+    context.update({'form': form})
 
-    return render(request, 'close_order.html', {'form': form})
+    return render(request, 'service/close_order.html', context)
