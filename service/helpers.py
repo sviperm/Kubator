@@ -1,4 +1,5 @@
-from .models import Order, OrderStatus, PatientProfile
+from django.contrib.auth.models import User
+from .models import Order, OrderStatus, PatientProfile, MedWorkerProfile
 from .handler import OrderDistributor
 
 
@@ -61,3 +62,15 @@ def is_in_process(worker_id):
         if order.status == dsys.status_in_process:
             return True
     return False
+
+
+def get_user_fio(user_id, profile):
+    user = User.objects.get(id=user_id)
+    last = user.last_name
+    first = user.first_name
+    if profile == 'med':
+        middle = user.medworkerprofile.middle_name
+    if profile == 'pat':
+        middle = user.patientprofile.middle_name
+
+    return f"{last} {first} {middle}"

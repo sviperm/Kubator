@@ -24,7 +24,7 @@ class OrderDistributor(metaclass=Singleton):
                 self.pass_order_to_worker(info[0], info[1])
                 self.to_do.remove(info[1])
 
-        self.status_waiting = models.OrderStatus.objects.get(name="Ожидает исполнителя")
+        self.status_waiting = models.OrderStatus.objects.get(name="Ожидает исполнения")
         self.status_in_process = models.OrderStatus.objects.get(name="В процессе")
         self.status_done = models.OrderStatus.objects.get(name="Выполнено")
 
