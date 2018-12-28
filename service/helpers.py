@@ -64,6 +64,18 @@ def is_in_process(worker_id):
     return False
 
 
+def is_done(worker_id):
+    dsys = OrderDistributor()
+    order = dsys.get_order(worker_id)
+
+    if not order:
+        return True
+    if order.status == dsys.status_done:
+        return True
+
+    return False
+
+
 def get_user_fio(user_id, profile):
     user = User.objects.get(id=user_id)
     last = user.last_name
