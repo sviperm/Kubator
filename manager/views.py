@@ -6,11 +6,25 @@ from .forms import SignUpPatientForm, SignUpMedWorkerForm
 from .models import ManagerProfile
 from .helpers import gen_username, is_manager
 from service.models import Order, OrderStatus
+from service.handler import OrderDistributor
 from django.utils import timezone
 
 
 @user_passes_test(is_manager, redirect_field_name='', login_url='account:home')
 def index(request):
+
+    def find_worker_by_order(order_id):
+        dsys = OrderDistributor()
+        order_obj = Order.objects.get(id=order_id)
+        for key, val in dsys.workers.items():
+            if val == order_obj:
+                return key
+
+    def close(order_id):
+        dsys = OrderDistributor()
+        worker_id = find_worker_by_order(order_id)
+        dsys.close(worker_id, "Закрыто менеджером")
+
     if request.method == 'POST':
         if 'redirect' in request.POST:
             if request.POST['redirect'] == 'medworker':
@@ -18,12 +32,13 @@ def index(request):
             elif request.POST['redirect'] == 'patient':
                 return redirect('manager:signup', 'patient')
         elif 'close-order' in request.POST:
-            order_id = request.POST['close-order']
-            status_done = OrderStatus.objects.get(name='Выполнено')
-            order = Order.objects.filter(pk=order_id).update(
-                status=status_done,
-                report='Закрыто менеджером',
-                closing_date=timezone.now())
+            close(request.POST['close-order'])
+            # order_id = request.POST['close-order']
+            # status_done = OrderStatus.objects.get(name='Выполнено')
+            # order = Order.objects.filter(pk=order_id).update(
+            #     status=status_done,
+            #     report='Закрыто менеджером',
+            #     closing_date=timezone.now())
             return redirect('manager:home')
     else:
         try:
