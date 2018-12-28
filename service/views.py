@@ -10,12 +10,12 @@ from . import helpers
 from . import url_names_config as names
 
 
-@user_passes_test(manager.is_patient, redirect_field_name='')
+@user_passes_test(manager.is_patient, redirect_field_name='', login_url='account:home')
 def build_service_list(request, template, context):
     return render(request, template, context)
 
 
-@user_passes_test(manager.is_patient, redirect_field_name='')
+@user_passes_test(manager.is_patient, redirect_field_name='', login_url='account:home')
 def build_service(request, service_name, success_redirect=names.SERVICE_LIST):
     service_id = Service.objects.get(name__iexact=service_name).id
 
@@ -109,7 +109,7 @@ def get_archive(request):
 
 
 ###############################################################################
-@user_passes_test(manager.is_medworker, redirect_field_name='')
+@user_passes_test(manager.is_medworker, redirect_field_name='', login_url='account:home')
 def get_new_order(request):
     worker_id = request.user.id
     dsys = OrderDistributor()
@@ -124,7 +124,7 @@ def get_new_order(request):
     return render(request, 'service/medworker.html', context)
 
 
-@user_passes_test(manager.is_medworker, redirect_field_name='')
+@user_passes_test(manager.is_medworker, redirect_field_name='', login_url='account:home')
 def open_order(request):
     worker_id = request.user.id
     if not helpers.is_in_process(worker_id):
@@ -133,7 +133,7 @@ def open_order(request):
     return redirect(names.CLOSE_ORDER)
 
 
-@user_passes_test(manager.is_medworker, redirect_field_name='')
+@user_passes_test(manager.is_medworker, redirect_field_name='', login_url='account:home')
 def close_order(request):
     if request.method == "POST":
         form = OrderReportForm(request.POST)

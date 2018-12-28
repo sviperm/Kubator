@@ -5,8 +5,17 @@ from django.contrib.auth.decorators import login_required
 from manager.helpers import is_manager, is_medworker, is_patient
 
 
+def error_404_view(request, exception):
+    return render(request, '404.html')
+
+
+def error_500_view(request, exception):
+    return render(request, '50099.html')
+
+
 def home(request):
     user = request.user
+    # TODO: if_superuser
     if is_manager(user):
         return redirect('manager:home')
     elif is_patient(user):

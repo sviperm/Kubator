@@ -24,8 +24,9 @@ SECRET_KEY = 'oji9oi9@vtg@dfjt^f4ct%bx9ng1dh)_n$y=5ufqr&o-@s=o$q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -105,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # The URL where requests are redirected for login
-LOGIN_URL = 'account:home'
+LOGIN_URL = 'account:login'
 
 # The URL where requests are redirected after login
 # when the contrib.auth.login view gets no next parameter.
