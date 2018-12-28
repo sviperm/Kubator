@@ -9,6 +9,10 @@ def error_404_view(request, exception):
     return render(request, '404.html')
 
 
+def error_500_view(request, exception):
+    return render(request, '50099.html')
+
+
 def home(request):
     user = request.user
     # TODO: if_superuser

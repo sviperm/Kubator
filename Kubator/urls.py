@@ -17,15 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView
-from django.conf.urls import handler404
+from django.conf.urls import handler404, handler500
 
 urlpatterns = [
     path('', include('account.urls')),
     path('admin/', admin.site.urls),
-    # path('medworker/', include('service.med_worker_urls')),
     path('service/', include('service.urls')),
     path('manager/', include('manager.urls')),
 ]
 
 
 handler404 = 'account.views.error_404_view'
+handler500 = 'account.views.error_500_view'
