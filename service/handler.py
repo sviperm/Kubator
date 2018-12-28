@@ -66,7 +66,14 @@ class OrderDistributor(metaclass=Singleton):
             middle = order.patient.middle_name[0].upper()
             ward = order.patient.ward
             service = order.service.name
-            time = order.opening_date.strftime("%H:%M") if time else ''
+
+            if time:
+                try:
+                    time = order.opening_date.strftime("%H:%M")
+                except:
+                    time = ''
+            else:
+                time = ''
 
             return {
                 'fio': f'{last} {first}.{middle}.',
