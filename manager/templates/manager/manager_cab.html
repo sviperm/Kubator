@@ -50,6 +50,15 @@
         <div class="tab-content" id="myTabContent">
             <!-- Отсюда начинается новые-->
             <div class="tab-pane fade show active" id="new" role="tabpanel" aria-labelledby="new-tab">
+                {% if not new_orders %}
+                <br>
+                <div id="border">
+                    <div class="h3">
+                        <p>Пусто ️🗑️</p>
+                    </div>
+                </div>
+                {% endif %}
+
                 {% for order in new_orders %}
                 <br>
                 <div id="border">
@@ -71,8 +80,7 @@
                 <br>
                 <div id="border">
                     <div class="h3">
-                        {% comment %} <p>Пусто  ¯\_(ツ)_/¯</p> {% endcomment %}
-                         <p>Пусто ️🗑️</p>
+                        <p>Пусто ️🗑️</p>
                     </div>
                 </div>
                 {% endif %}
@@ -110,6 +118,15 @@
             </div>
             <!-- Отсюда начинаются выполненные-->
             <div class="tab-pane fade" id="done" role="tabpanel" aria-labelledby="done-tab">
+                {% if not done_orders %}
+                <br>
+                <div id="border">
+                    <div class="h3">
+                        <p>Пусто ️🗑️</p>
+                    </div>
+                </div>
+                {% endif %}
+
                 {% for order in done_orders %}
                 <br>
                 <div id="border">
