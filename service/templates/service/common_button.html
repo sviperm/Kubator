@@ -1,3 +1,7 @@
-<form action="" method="post">
-    <input type="submit" value="">
+{% block common_button %}
+
+<form name="{{name}}" action="{% url url_value %}" method="get">
+    <button type="submit">{{value}}</button>
 </form>
+
+{% endblock common_button%}

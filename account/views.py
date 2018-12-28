@@ -16,7 +16,9 @@ def error_500_view(request, exception):
 def home(request):
     user = request.user
     # TODO: if_superuser
-    if is_manager(user):
+    if user.is_superuser:
+        return redirect('/admin/')
+    elif is_manager(user):
         return redirect('manager:home')
     elif is_patient(user):
         return redirect('service/patient/')

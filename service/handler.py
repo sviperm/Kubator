@@ -19,6 +19,11 @@ class OrderDistributor(metaclass=Singleton):
         self.workers = self.load_workers()
         self.to_do = self.load_orders()
 
+        if self.to_do:
+            for info in zip(self.workers.keys(), self.to_do):
+                self.pass_order_to_worker(info[0], info[1])
+                self.to_do.remove(info[1])
+
         self.status_waiting = models.OrderStatus.objects.get(name="Ожидает исполнителя")
         self.status_in_process = models.OrderStatus.objects.get(name="В процессе")
         self.status_done = models.OrderStatus.objects.get(name="Выполнено")
@@ -50,10 +55,26 @@ class OrderDistributor(metaclass=Singleton):
             return None
         return self.workers[worker_id]
 
-    def get_order_info(self, worker_id):
+    def get_order_info(self, worker_id, time=False):
         order = self.get_order(worker_id)
         if order:
-            return order.patient.user.username
+            last = order.patient.user.last_name.title()
+
+            first = order.patient.user.first_name
+            first = first[0].upper() if first else first
+
+            middle = order.patient.middle_name[0].upper()
+            ward = order.patient.ward
+            service = order.service.name
+            time = order.opening_date.strftime("%H:%M") if time else ''
+
+            return {
+                'fio': f'{last} {first}.{middle}.',
+                'ward': f'Палата № {ward}',
+                'service': service,
+                'time': time,
+            }
+
         return None
 
     def get_order_list(self):
