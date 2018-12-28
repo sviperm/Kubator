@@ -6,6 +6,7 @@ from .forms import SignUpPatientForm, SignUpMedWorkerForm
 from .models import ManagerProfile
 from .helpers import gen_username, is_manager
 from service.models import Order, OrderStatus
+from django.utils import timezone
 
 
 @user_passes_test(is_manager, redirect_field_name='', login_url='account:home')
@@ -14,15 +15,22 @@ def index(request):
         if 'redirect' in request.POST:
             if request.POST['redirect'] == 'medworker':
                 return redirect('manager:signup', 'medworker')
-            elif request.POST['redirect'] == 'patient':
+            elif request.POST['redirect'] == 'patient': 
                 return redirect('manager:signup', 'patient')
         elif 'close-order' in request.POST:
-            # TODO: close order
-            # order_id = request.POST['close-order']
-            return HttpResponse(request.POST['close-order'])
+            order_id = request.POST['close-order']
+            status_done = OrderStatus.objects.get(name='Выполнено')
+            order = Order.objects.filter(pk=order_id).update(
+                status=status_done,
+                report='Закрыто менеджером',
+                closing_date=timezone.now())
+            return redirect('manager:home')
     else:
-        middle_name = ManagerProfile.objects.get(
-            user=request.user.pk).middle_name
+        try:
+            middle_name = ManagerProfile.objects.get(
+                user=request.user.pk).middle_name
+        except ManagerProfile.DoesNotExist:
+            middle_name = ''
         status_new = OrderStatus.objects.get(name='Ожидает исполнения')
         status_proc = OrderStatus.objects.get(name='В процессе')
         status_done = OrderStatus.objects.get(name='Выполнено')

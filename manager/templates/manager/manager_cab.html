@@ -36,20 +36,20 @@
     <div>
         <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="nav" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                    aria-controls="home" aria-selected="true">Новые</a>
+                <a class="nav-link active" id="nav" id="new-tab" data-toggle="tab" href="#new" role="tab" aria-controls="new"
+                    aria-selected="true">Новые</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                <a class="nav-link" id="current-tab" data-toggle="tab" href="#current" role="tab" aria-controls="current"
                     aria-selected="false">Текущие</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+                <a class="nav-link" id="done-tab" data-toggle="tab" href="#done" role="tab" aria-controls="done"
                     aria-selected="false">Выполненные</a>
         </ul>
         <div class="tab-content" id="myTabContent">
             <!-- Отсюда начинается новые-->
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="tab-pane fade show active" id="new" role="tabpanel" aria-labelledby="new-tab">
                 {% for order in new_orders %}
                 <br>
                 <div id="border">
@@ -66,7 +66,17 @@
                 {% endfor %}
             </div>
             <!-- Отсюда начинаются текущие-->
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="tab-pane fade" id="current" role="tabpanel" aria-labelledby="current-tab">
+                {% if not in_proc_orders %}
+                <br>
+                <div id="border">
+                    <div class="h3">
+                        {% comment %} <p>Пусто  ¯\_(ツ)_/¯</p> {% endcomment %}
+                         <p>Пусто ️🗑️</p>
+                    </div>
+                </div>
+                {% endif %}
+
                 {% for order in in_proc_orders %}
                 <br>
                 <div id="border">
@@ -84,21 +94,22 @@
                     </div>
                     <div id="border1">
                         <p>Время выполнения:
-                        <br>
-                        {{order.opening_date|date:"d.m.Y - H:i"}}
-                        <br>
-                        ...
+                            <br>
+                            {{order.opening_date|date:"d.m.Y - H:i"}}
+                            <br>
+                            ...
                         </p>
                     </div>
                     <form action="{% url 'manager:home' %}" method="post">
                         {% csrf_token %}
-                        <div id="bc"><button type="sumbit" class="btn btn-default" name="close-order" value="{{order.id}}">Закрыть заявку</button></div>
+                        <div id="bc"><button type="sumbit" class="btn btn-default" name="close-order" value="{{order.id}}">Закрыть
+                                заявку</button></div>
                     </form>
                 </div>
                 {% endfor %}
             </div>
             <!-- Отсюда начинаются выполненные-->
-            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+            <div class="tab-pane fade" id="done" role="tabpanel" aria-labelledby="done-tab">
                 {% for order in done_orders %}
                 <br>
                 <div id="border">
@@ -116,10 +127,10 @@
                     </div>
                     <div id="border1">
                         <p>Время выполнения:
-                        <br>
-                        {{order.opening_date|date:"d.m.Y - H:i"}}
-                        <br>
-                        {{order.closing_date|date:"d.m.Y - H:i"}}</p>
+                            <br>
+                            {{order.opening_date|date:"d.m.Y - H:i"}}
+                            <br>
+                            {{order.closing_date|date:"d.m.Y - H:i"}}</p>
                     </div>
                     <div id="border1">
                         <p>Комментарий:<br>{{order.report}}</p>
