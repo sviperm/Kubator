@@ -15,7 +15,7 @@ def index(request):
         if 'redirect' in request.POST:
             if request.POST['redirect'] == 'medworker':
                 return redirect('manager:signup', 'medworker')
-            elif request.POST['redirect'] == 'patient': 
+            elif request.POST['redirect'] == 'patient':
                 return redirect('manager:signup', 'patient')
         elif 'close-order' in request.POST:
             order_id = request.POST['close-order']
